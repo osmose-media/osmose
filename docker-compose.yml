@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: '3.8'
 
 services:
@@ -66,3 +67,6 @@ volumes:
       type: none
       device: /home/adminrag/osmose/media
       o: bind
+=======
+version: '3.8'\nservices:\n  # To be configured
+>>>>>>> 5c2c750457d0040320314f5cc313ccafe019d5a5
