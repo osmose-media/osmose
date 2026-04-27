@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: osmose-db
+    restart: always
+    environment:
+      POSTGRES_USER: osmose
+      POSTGRES_PASSWORD: osmosepassword
+      POSTGRES_DB: osmose
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7-alpine
+    container_name: osmose-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: osmose-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://osmose:osmosepassword@db:5432/osmose?schema=public
+      REDIS_URL: redis://redis:6379
+      PORT: 4000
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - media_data:/media
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: osmose-frontend
+    restart: always
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:4000
+    depends_on:
+      - backend
+    ports:
+      - "3333:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  postgres_data:
+  media_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/adminrag/osmose/media
+      o: bind
