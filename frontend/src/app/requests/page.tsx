@@ -30,12 +30,13 @@ function DiscoverContent() {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [trending, setTrending] = useState<{ movies: any[], tv: any[] }>({ movies: [], tv: [] });
   const [localRecent, setLocalRecent] = useState<any[]>([]);
-  const [pendingRequests, setPendingRequests] = useState<any[]>([]);
+  const [activeRequests, setActiveRequests] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (token) {
+      // Fetch Trending
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests/trending`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
@@ -46,6 +47,7 @@ function DiscoverContent() {
       })
       .catch(console.error);
 
+      // Fetch Local Recent
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/media`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
@@ -53,13 +55,16 @@ function DiscoverContent() {
       .then(data => setLocalRecent(Array.isArray(data) ? data.slice(0, 6) : []))
       .catch(console.error);
 
+      // Fetch All Active Requests (Pending + Processing)
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/requests`, {
         headers: { 'Authorization': `Bearer ${token}` }
       })
       .then(res => res.json())
       .then(data => {
-        const pending = Array.isArray(data) ? data.filter((r: any) => r.status === 'REQUESTED').slice(0, 6) : [];
-        setPendingRequests(pending);
+        const active = Array.isArray(data) 
+          ? data.filter((r: any) => r.status === 'REQUESTED' || r.status === 'APPROVED').slice(0, 6) 
+          : [];
+        setActiveRequests(active);
       })
       .catch(console.error);
     }
@@ -94,28 +99,37 @@ function DiscoverContent() {
     }
   };
 
-  const MediaCard = ({ item, type }: { item: any, type?: string }) => {
+  const MediaCard = ({ item, type, isLandscape = false }: { item: any, type?: string, isLandscape?: boolean }) => {
     const mediaType = type || item.media_type || (item.title ? 'movie' : 'tv');
     const isLocal = !!item.filePath || item.status === 'AVAILABLE';
     const linkUrl = isLocal && item.id && !item.id.toString().startsWith('local') ? `/media/${item.id}` : `/discover/${mediaType}/${item.tmdbId || item.id}`;
 
+    // Map backend statuses for UI display
+    const uiStatus = item.status || (item.status === 'REQUESTED' ? 'PENDING' : item.status === 'APPROVED' ? 'PROCESSING' : null);
+
     return (
       <Link href={linkUrl}>
         <div className="group relative flex flex-col gap-2 cursor-pointer">
-          <div className="relative aspect-[2/3] overflow-hidden rounded-2xl bg-white/5 border border-white/5 shadow-sm transition-all duration-300 group-hover:scale-[1.03] group-hover:border-white/10 group-hover:shadow-xl">
-            {item.poster_path || item.posterPath ? (
-              <img src={item.posterPath || `https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" className="h-full w-full object-cover" />
+          <div className={cn(
+            "relative overflow-hidden rounded-2xl bg-white/5 border border-white/5 shadow-sm transition-all duration-300 group-hover:scale-[1.03] group-hover:border-white/10 group-hover:shadow-xl",
+            isLandscape ? "aspect-video" : "aspect-[2/3]"
+          )}>
+            {item.poster_path || item.posterPath || item.backdropPath ? (
+              <img 
+                src={isLandscape ? (item.backdropPath || item.posterPath) : (item.posterPath || `https://image.tmdb.org/t/p/w500${item.poster_path}`)} 
+                alt="" 
+                className="h-full w-full object-cover" 
+              />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-[10px] font-bold text-white/10 uppercase p-4 text-center">
                 {item.title || item.name}
               </div>
             )}
             
-            {/* Status Icon Overlay */}
             <div className="absolute top-2 right-2 flex flex-col gap-1">
-               {item.status && (
+               {uiStatus && (
                  <div className="bg-black/60 backdrop-blur-md p-1.5 rounded-lg border border-white/10 shadow-2xl">
-                    {getStatusIcon(item.status)}
+                    {getStatusIcon(uiStatus)}
                  </div>
                )}
             </div>
@@ -158,17 +172,21 @@ function DiscoverContent() {
 
       {!urlQuery && (
         <>
-          {/* 2. PENDING REQUESTS ROW (FULL WIDTH WITH POSTERS) */}
+          {/* 2. ACTIVE REQUESTS ROW (LANDSCAPE 16:9) */}
           <section className="flex flex-col gap-6">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
                <h3 className="text-xs font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
-                 <Clock className="h-3 w-3" /> Requêtes en cours
+                 <Clock className="h-3 w-3" /> Requêtes en cours & traitement
                </h3>
                <Link href="/manage-requests" className="text-[10px] text-primary font-bold hover:underline flex items-center gap-1">Voir tout <ChevronRight className="h-3 w-3" /></Link>
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-               {pendingRequests.length > 0 ? pendingRequests.map(r => (
-                 <MediaCard key={r.id} item={{...r, status: 'PENDING'}} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+               {activeRequests.length > 0 ? activeRequests.map(r => (
+                 <MediaCard 
+                    key={r.id} 
+                    item={{...r, status: r.status === 'REQUESTED' ? 'PENDING' : 'PROCESSING'}} 
+                    isLandscape={true} 
+                 />
                )) : (
                  <div className="col-span-full py-10 flex flex-col items-center justify-center border border-dashed border-white/5 rounded-2xl bg-white/[0.01]">
                     <Clock className="h-5 w-5 text-white/5 mb-2" />
