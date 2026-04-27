@@ -35,8 +35,23 @@ export function TopNav() {
     )}>
       <div className="flex w-full items-center">
         
-        {/* Left: Placeholder to balance center logo */}
-        <div className="flex-1" />
+        {/* Left Side: Navigation Links */}
+        <div className="flex-1 flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.url} 
+                href={link.url}
+                className={cn(
+                  "text-[11px] font-bold uppercase tracking-[0.15em] transition-colors hover:text-white",
+                  pathname.startsWith(link.url.split('?')[0]) ? "text-white" : "text-white/30"
+                )}
+              >
+                {link.title}
+              </Link>
+            ))}
+          </nav>
+        </div>
 
         {/* Center: Logo */}
         <div className="absolute left-1/2 -translate-x-1/2">
@@ -48,23 +63,8 @@ export function TopNav() {
           </Link>
         </div>
 
-        {/* Right Side: Links + User */}
-        <div className="flex-1 flex items-center justify-end gap-8">
-          <nav className="hidden md:flex items-center gap-6">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.url} 
-                href={link.url}
-                className={cn(
-                  "text-xs font-bold uppercase tracking-widest transition-colors hover:text-white",
-                  pathname.startsWith(link.url.split('?')[0]) ? "text-white" : "text-white/30"
-                )}
-              >
-                {link.title}
-              </Link>
-            ))}
-          </nav>
-          
+        {/* Right Side: User Profile */}
+        <div className="flex-1 flex items-center justify-end">
           <UserNav />
         </div>
       </div>
