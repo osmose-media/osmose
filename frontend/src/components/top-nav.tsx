@@ -36,15 +36,15 @@ export function TopNav() {
       <div className="flex w-full items-center">
         
         {/* Left Side: Navigation Links */}
-        <div className="flex-1 flex items-center gap-8">
-          <nav className="hidden md:flex items-center gap-8">
+        <div className="flex-1 flex items-center">
+          <nav className="hidden md:flex items-center gap-8 pl-10">
             {navLinks.map((link) => (
               <Link 
                 key={link.url} 
                 href={link.url}
                 className={cn(
                   "text-[11px] font-bold uppercase tracking-[0.15em] transition-colors hover:text-white",
-                  pathname.startsWith(link.url.split('?')[0]) ? "text-white" : "text-white/30"
+                  pathname.startsWith(link.url.split('?')[0]) ? "text-white" : "text-white/80"
                 )}
               >
                 {link.title}
