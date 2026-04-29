@@ -157,7 +157,7 @@ function DiscoverContent() {
       {urlQuery && (
         <section className="flex flex-col gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
            <div className="flex items-center justify-between border-b border-white/5 pb-4">
-              <h3 className="text-sm font-black uppercase tracking-widest text-white/40">Résultats : {urlQuery}</h3>
+              <h3 className="text-sm font-black tracking-widest text-white/40">Résultats : {urlQuery}</h3>
               <Link href="/requests" className="text-xs text-primary hover:underline">Effacer</Link>
            </div>
            {loading ? (
@@ -175,7 +175,7 @@ function DiscoverContent() {
           {/* 2. ACTIVE REQUESTS ROW (LANDSCAPE 16:9) */}
           <section className="flex flex-col gap-6">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
-               <h3 className="text-xs font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
+               <h3 className="text-xs font-black tracking-widest text-white/40 flex items-center gap-2">
                  <Clock className="h-3 w-3" /> Requêtes en cours & traitement
                </h3>
                <Link href="/manage-requests" className="text-[10px] text-primary font-bold hover:underline flex items-center gap-1">Voir tout <ChevronRight className="h-3 w-3" /></Link>
@@ -199,7 +199,7 @@ function DiscoverContent() {
           {/* 3. LOCAL RECENT ROW */}
           <section className="flex flex-col gap-6">
             <div className="flex items-center justify-between border-b border-white/5 pb-4">
-               <h3 className="text-xs font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
+               <h3 className="text-xs font-black tracking-widest text-white/40 flex items-center gap-2">
                  <Inbox className="h-3 w-3" /> Récemment ajouté (Local)
                </h3>
                <Link href="/library" className="text-[10px] text-primary font-bold hover:underline">Ma Bibliothèque</Link>
@@ -217,7 +217,7 @@ function DiscoverContent() {
 
           {/* 4. TRENDING TMDB */}
           <section className="flex flex-col gap-6">
-            <h3 className="text-xs font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
+            <h3 className="text-xs font-black tracking-widest text-white/40 flex items-center gap-2">
               <Sparkles className="h-3 w-3 text-yellow-500" /> Films Tendances (Monde)
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
@@ -226,7 +226,7 @@ function DiscoverContent() {
           </section>
 
           <section className="flex flex-col gap-6">
-            <h3 className="text-xs font-black uppercase tracking-widest text-white/40 flex items-center gap-2">
+            <h3 className="text-xs font-black tracking-widest text-white/40 flex items-center gap-2">
               <Tv className="h-3 w-3 text-primary" /> Séries Populaires (Monde)
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">

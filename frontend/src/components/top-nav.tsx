@@ -43,7 +43,7 @@ export function TopNav() {
                 key={link.url} 
                 href={link.url}
                 className={cn(
-                  "text-[11px] font-bold uppercase tracking-[0.15em] transition-colors hover:text-white",
+                  "text-[11px] font-bold tracking-[0.15em] transition-colors hover:text-white",
                   pathname.startsWith(link.url.split('?')[0]) ? "text-white" : "text-white/80"
                 )}
               >

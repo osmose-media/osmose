@@ -12,6 +12,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Osmose",
   description: "Modern self-hosted streaming",
+  icons: {
+    icon: "/osmosefavicon.png",
+  },
 };
 
 export default function RootLayout({

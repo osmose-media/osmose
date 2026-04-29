@@ -88,7 +88,7 @@ export function TopBar() {
                   <div className="p-4 text-center text-sm text-white/40">Recherche...</div>
                 ) : (
                   <>
-                    <div className="px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-white/30">Suggestions</div>
+                    <div className="px-3 py-2 text-[10px] font-bold tracking-widest text-white/30">Suggestions</div>
                     {results.map((item) => (
                       <Link 
                         key={item.id} 
@@ -113,7 +113,7 @@ export function TopBar() {
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-semibold text-white truncate">{item.title}</p>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-white/50 font-bold tracking-wider uppercase">{item.type}</span>
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-white/10 text-white/50 font-bold tracking-wider capitalize">{item.type.toLowerCase()}</span>
                             {item.releaseDate && (
                               <span className="text-[10px] text-white/30 font-medium">{new Date(item.releaseDate).getFullYear()}</span>
                             )}

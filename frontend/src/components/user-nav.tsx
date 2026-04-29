@@ -53,8 +53,8 @@ export function UserNav() {
             </div>
             <div className="flex flex-col space-y-0.5">
               <p className="text-sm font-semibold text-white tracking-tight">{user.username}</p>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-white/30">
-                {user.isAdmin ? 'Administrateur' : 'Utilisateur'}
+              <p className="text-[9px] font-bold tracking-widest text-white/30">
+                {user?.isAdmin ? "Administrateur" : "Utilisateur"}
               </p>
             </div>
           </div>

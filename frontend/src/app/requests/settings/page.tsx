@@ -226,7 +226,7 @@ const AddServerModal = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Server Name*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Server Name*</Label>
               <Input 
                 className="bg-white/5 border-white/10 h-11" 
                 placeholder="e.g. My Radarr" 
@@ -235,7 +235,7 @@ const AddServerModal = ({
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Hostname or IP Address*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Hostname or IP Address*</Label>
               <div className="flex">
                 <div className="flex items-center px-3 bg-white/5 border border-r-0 border-white/10 rounded-l-xl text-xs text-white/30">
                   {serverData.useSsl ? 'https://' : 'http://'}
@@ -249,7 +249,7 @@ const AddServerModal = ({
               </div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Port*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Port*</Label>
               <Input 
                 className="bg-white/5 border-white/10 h-11" 
                 value={serverData.port}
@@ -270,7 +270,7 @@ const AddServerModal = ({
           </div>
 
           <div className="space-y-2">
-            <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">API Key*</Label>
+            <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">API Key*</Label>
             <Input 
               type="password" 
               className="bg-white/5 border-white/10 h-11" 
@@ -282,19 +282,19 @@ const AddServerModal = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">URL Base</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">URL Base</Label>
               <Input className="bg-white/5 border-white/10 h-11" placeholder="/" />
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Quality Profile*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Quality Profile*</Label>
               <div className="h-11 flex items-center px-4 bg-white/5 border border-white/10 rounded-xl text-sm text-white/20 italic">Select a profile...</div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Root Folder*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Root Folder*</Label>
               <div className="h-11 flex items-center px-4 bg-white/5 border border-white/10 rounded-xl text-sm text-white/20 italic">Select a folder...</div>
             </div>
             <div className="space-y-2">
-              <Label className="text-[10px] font-bold uppercase tracking-wider text-white/40 ml-1">Minimum Availability*</Label>
+              <Label className="text-[10px] font-bold tracking-wider text-white/40 ml-1">Minimum Availability*</Label>
               <div className="h-11 flex items-center px-4 bg-white/5 border border-white/10 rounded-xl text-sm text-white/20 italic">Select availability...</div>
             </div>
           </div>
@@ -508,7 +508,7 @@ export default function RequestsSettingsPage() {
                 <CardContent className="space-y-6">
                   <div className="grid gap-4">
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold uppercase tracking-wider text-white/40">{t.general.apiKey}</Label>
+                      <Label className="text-xs font-bold tracking-wider text-white/40">{t.general.apiKey}</Label>
                       <div className="flex gap-2">
                         <Input className="bg-white/5 border-white/10 font-mono text-xs" readOnly placeholder="API Key will appear here" />
                         <Button variant="outline" className="border-white/10">{lang === 'fr' ? 'Rénégénérer' : 'Regenerate'}</Button>
@@ -516,11 +516,11 @@ export default function RequestsSettingsPage() {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold uppercase tracking-wider text-white/40">{t.general.appTitle}</Label>
+                        <Label className="text-xs font-bold tracking-wider text-white/40">{t.general.appTitle}</Label>
                         <Input className="bg-white/5 border-white/10" placeholder="Osmose" />
                       </div>
                       <div className="space-y-2">
-                        <Label className="text-xs font-bold uppercase tracking-wider text-white/40">{t.general.appUrl}</Label>
+                        <Label className="text-xs font-bold tracking-wider text-white/40">{t.general.appUrl}</Label>
                         <Input className="bg-white/5 border-white/10" placeholder="https://osmose.example.com" />
                       </div>
                     </div>
@@ -547,16 +547,14 @@ export default function RequestsSettingsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold uppercase tracking-wider text-white/40">{t.general.displayLang}</Label>
+                      <Label className="text-xs font-bold tracking-wider text-white/40">{t.general.displayLang}</Label>
                       <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <div className="flex w-full h-12 items-center justify-between bg-white/5 border border-white/10 rounded-xl px-4 hover:bg-white/10 text-white transition-all cursor-pointer group">
-                             <div className="flex items-center gap-2">
-                               <Globe className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors" />
-                               <span className="text-sm font-medium">{lang === 'fr' ? 'Français' : 'English'}</span>
-                             </div>
-                             <ChevronRight className="h-4 w-4 text-white/20 rotate-90" />
-                          </div>
+                        <DropdownMenuTrigger render={<div className="flex w-full h-12 items-center justify-between bg-white/5 border border-white/10 rounded-xl px-4 hover:bg-white/10 text-white transition-all cursor-pointer group" />}>
+                           <div className="flex items-center gap-2">
+                             <Globe className="h-4 w-4 text-white/30 group-hover:text-white/60 transition-colors" />
+                             <span className="text-sm font-medium">{lang === 'fr' ? 'Français' : 'English'}</span>
+                           </div>
+                           <ChevronRight className="h-4 w-4 text-white/20 rotate-90" />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56 glass-card border-white/10">
                           <DropdownMenuItem onClick={() => setLang('fr')} className="gap-2">🇫🇷 Français</DropdownMenuItem>
@@ -565,7 +563,7 @@ export default function RequestsSettingsPage() {
                       </DropdownMenu>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-xs font-bold uppercase tracking-wider text-white/40">{t.general.region}</Label>
+                      <Label className="text-xs font-bold tracking-wider text-white/40">{t.general.region}</Label>
                       <div className="h-12 flex items-center px-4 bg-white/5 border border-white/10 rounded-xl text-sm font-medium text-white/60">
                          {lang === 'fr' ? 'France' : 'United States'}
                       </div>

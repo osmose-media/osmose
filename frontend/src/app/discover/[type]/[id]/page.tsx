@@ -126,7 +126,7 @@ export default function MediaDetailPage() {
          <div className="lg:col-span-2 space-y-12">
             {/* Overview */}
             <section className="space-y-4">
-               <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Synopsis</h3>
+               <h3 className="text-[10px] font-black tracking-[0.2em] text-white/20">Synopsis</h3>
                <p className="text-lg leading-relaxed text-white/70 max-w-2xl font-medium">{media.overview || "Aucun synopsis disponible pour ce titre."}</p>
                <div className="flex flex-wrap gap-2 pt-2">
                   {media.genres?.map((g: string) => <Badge key={g} variant="secondary" className="bg-white/5 text-white/40 border-0 px-4 py-1 rounded-full text-xs">{g}</Badge>)}
@@ -137,7 +137,7 @@ export default function MediaDetailPage() {
             {type === 'tv' && media.seasons && (
                <section className="space-y-6">
                   <div className="flex items-center justify-between border-b border-white/5 pb-4">
-                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Saisons & Épisodes</h3>
+                     <h3 className="text-[10px] font-black tracking-[0.2em] text-white/20">Saisons & Épisodes</h3>
                      <p className="text-xs text-white/40">{media.seasons.length} Saisons disponibles</p>
                   </div>
                   
@@ -184,7 +184,7 @@ export default function MediaDetailPage() {
 
             {/* Cast */}
             <section className="space-y-6">
-               <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Casting</h3>
+               <h3 className="text-[10px] font-black tracking-[0.2em] text-white/20">Casting</h3>
                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
                   {media.cast?.map((c: any) => (
                     <div key={c.name} className="flex flex-col gap-2">

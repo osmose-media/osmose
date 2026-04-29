@@ -108,7 +108,7 @@ export default function AccountPage() {
             </div>
             
             <div className="text-center space-y-2">
-               <p className="text-[10px] font-bold uppercase tracking-widest text-white/20">Photo de profil</p>
+               <p className="text-[10px] font-bold tracking-widest text-white/20">Photo de profil</p>
                <Button 
                  variant="ghost" 
                  size="sm" 
@@ -126,7 +126,7 @@ export default function AccountPage() {
           <CardContent className="p-8 space-y-8">
             <div className="grid gap-6">
               <div className="space-y-2">
-                <Label className="text-[10px] font-black uppercase text-white/30 tracking-widest ml-1">Nom d'utilisateur</Label>
+                <Label className="text-[10px] font-black text-white/30 tracking-widest ml-1">Nom d'utilisateur</Label>
                 <Input 
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}

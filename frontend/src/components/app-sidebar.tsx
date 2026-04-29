@@ -28,7 +28,7 @@ export function AppSidebar() {
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-64 border-r border-white/5 bg-background/50 backdrop-blur-xl z-50 flex flex-col p-6 gap-8">
-      <Link href="/" className="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-white/20 hover:text-white transition-colors mb-2 group">
+      <Link href="/" className="flex items-center gap-2 text-[10px] font-bold tracking-widest text-white/20 hover:text-white transition-colors mb-2 group">
          <ChevronLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" /> Retour à l'accueil
       </Link>
 
