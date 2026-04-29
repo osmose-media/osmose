@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { PlaySquare, Shield, Folder, Share2, CheckCircle2, ChevronRight, ChevronLeft } from "lucide-react";
+import { Shield, Folder, Share2, CheckCircle2, ChevronRight, ChevronLeft } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 const steps = [
@@ -79,11 +80,15 @@ export default function SetupPage() {
         
         {/* Left: Progress Side */}
         <div className="md:col-span-1 space-y-8 flex flex-col justify-center">
-          <div className="flex items-center gap-3">
-             <div className="h-10 w-10 flex items-center justify-center rounded-xl bg-white text-black">
-                <PlaySquare className="h-6 w-6 fill-current" />
-             </div>
-             <span className="text-xl font-bold text-white tracking-tight">Osmose</span>
+          <div className="flex items-center mb-4">
+             <Image 
+               src="/big_white_logo_osmose.png" 
+               alt="Osmose Logo" 
+               width={160} 
+               height={50} 
+               className="h-auto w-auto max-h-12 object-contain"
+               priority
+             />
           </div>
           
           <div className="space-y-6">

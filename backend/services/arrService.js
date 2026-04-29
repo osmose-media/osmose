@@ -52,6 +52,25 @@ class ArrService {
       return [];
     }
   }
+
+  async testConnection() {
+    try {
+      // Both Radarr and Sonarr have a /system/status endpoint
+      const response = await this.client.get('/system/status');
+      
+      // Also fetch tags to return them for UI display
+      const tagsResponse = await this.client.get('/tag');
+      
+      return { 
+        success: true, 
+        version: response.data.version,
+        tags: tagsResponse.data
+      };
+    } catch (error) {
+      console.error(`[${this.type}] Connection test error:`, error.message);
+      throw error;
+    }
+  }
 }
 
 module.exports = ArrService;

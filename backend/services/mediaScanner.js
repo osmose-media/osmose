@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { PrismaClient } = require('@prisma/client');
+const { searchTMDB, getDetails } = require('./tmdbService');
 const prisma = new PrismaClient();
 
 const MEDIA_PATH = process.env.MEDIA_PATH || '/media';
@@ -35,27 +36,68 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
 
 async function processFile(filePath) {
   const fileName = path.basename(filePath);
-  const title = fileName.replace(/\.[^/.]+$/, ""); // Remove extension
+  let cleanTitle = fileName.replace(/\.[^/.]+$/, ""); // Remove extension
   
-  // Heuristic for type
-  let type = 'MOVIE';
-  const lowerPath = filePath.toLowerCase();
-  if (lowerPath.includes('/tv/') || lowerPath.includes('/series/')) type = 'TV';
-  if (lowerPath.includes('/anime/')) type = 'ANIME';
+  // Basic cleanup (remove year in brackets, dots, etc.)
+  cleanTitle = cleanTitle.replace(/\(\d{4}\)/g, "").replace(/\./g, " ").trim();
 
   const existing = await prisma.media.findFirst({
     where: { filePath: filePath }
   });
 
   if (!existing) {
-    console.log(`[Scanner] Adding ${type}: ${title}`);
+    console.log(`[Scanner] New file found: ${cleanTitle}`);
+    
+    // Heuristic for type
+    let type = 'MOVIE';
+    let tmdbType = 'movie';
+    const lowerPath = filePath.toLowerCase();
+    if (lowerPath.includes('/tv/') || lowerPath.includes('/series/')) {
+      type = 'TV';
+      tmdbType = 'tv';
+    }
+    if (lowerPath.includes('/anime/')) {
+      type = 'ANIME';
+      tmdbType = 'tv'; // TMDB uses 'tv' for anime series
+    }
+
+    let metadata = {
+      tmdbId: `local-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+      posterPath: null,
+      backdropPath: null,
+      overview: null,
+      releaseDate: null
+    };
+
+    try {
+      console.log(`[Scanner] Searching TMDB for: ${cleanTitle}`);
+      const results = await searchTMDB(cleanTitle, tmdbType);
+      
+      if (results && results.length > 0) {
+        const bestMatch = results[0];
+        console.log(`[Scanner] Found match: ${bestMatch.title || bestMatch.name} (ID: ${bestMatch.id})`);
+        
+        // Fetch full details
+        const details = await getDetails(bestMatch.id, tmdbType);
+        metadata = {
+          tmdbId: details.tmdbId.toString(),
+          posterPath: details.posterPath,
+          backdropPath: details.backdropPath,
+          overview: details.overview,
+          releaseDate: details.releaseDate ? new Date(details.releaseDate) : null
+        };
+      }
+    } catch (err) {
+      console.error(`[Scanner] TMDB Lookup failed for ${cleanTitle}:`, err.message);
+    }
+
     await prisma.media.create({
       data: {
-        title: title,
+        title: cleanTitle,
         filePath: filePath,
         type: type,
-        tmdbId: `local-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        status: 'AVAILABLE'
+        status: 'AVAILABLE',
+        ...metadata
       }
     });
   }

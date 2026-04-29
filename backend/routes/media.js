@@ -18,6 +18,36 @@ router.get('/', async (req, res) => {
   }
 });
 
+const { searchTMDB } = require('../services/tmdbService');
+
+// ... (existing routes)
+
+// Search media (Real-time TMDB + Local)
+router.get('/search', async (req, res) => {
+  const { q } = req.query;
+  if (!q) return res.json([]);
+  
+  try {
+    // Search TMDB for real-time results
+    const results = await searchTMDB(q, 'multi');
+    
+    // Map results to match our frontend's expected format
+    const formattedResults = results.slice(0, 5).map(item => ({
+      id: item.id,
+      tmdbId: item.id,
+      title: item.title || item.name,
+      type: item.media_type === 'tv' ? 'TV' : 'MOVIE',
+      posterPath: item.poster_path ? `https://image.tmdb.org/t/p/w200${item.poster_path}` : null,
+      releaseDate: item.release_date || item.first_air_date,
+    }));
+
+    res.json(formattedResults);
+  } catch (error) {
+    console.error("Search error:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Trigger scan
 router.post('/scan', async (req, res) => {
   try {

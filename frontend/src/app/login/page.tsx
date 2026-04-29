@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-import { PlaySquare, ArrowRight, Lock, User } from "lucide-react";
+import { ArrowRight, Lock, User } from "lucide-react";
 import { useAuth } from "@/context/auth-context";
 
 export default function LoginPage() {
@@ -49,11 +50,15 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-mesh p-6">
       <div className="w-full max-w-[420px] space-y-8">
-        <div className="flex flex-col items-center gap-2 text-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-black shadow-2xl">
-            <PlaySquare className="h-9 w-9 fill-current" />
-          </div>
-          <h1 className="mt-4 text-3xl font-bold tracking-tight text-white">Osmose</h1>
+        <div className="flex flex-col items-center gap-6 text-center">
+          <Image 
+            src="/big_white_logo_osmose.png" 
+            alt="Osmose Logo" 
+            width={200} 
+            height={60} 
+            className="h-auto w-auto max-h-16 object-contain"
+            priority
+          />
           <p className="text-muted-foreground/80">Sign in to your private cloud</p>
         </div>
 

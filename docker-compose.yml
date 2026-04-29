@@ -62,5 +62,5 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: /home/adminrag/osmose/media
+      device: /home/entropia/osmose/media
       o: bind

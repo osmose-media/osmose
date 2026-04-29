@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { 
-  PlaySquare, 
   Search, 
   Film, 
   Tv, 
   ClipboardList, 
   Settings2,
-  ChevronLeft
+  ChevronLeft,
+  Sliders
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -18,7 +19,8 @@ const menuItems = [
   { title: "Films", url: "/discover/movie", icon: Film },
   { title: "Séries", url: "/discover/tv", icon: Tv },
   { title: "Requêtes", url: "/manage-requests", icon: ClipboardList },
-  { title: "Préférences", url: "/settings?tab=preferences", icon: Settings2 },
+  { title: "Préférences", url: "/requests/settings", icon: Sliders },
+  { title: "Configuration", url: "/settings", icon: Settings2 },
 ];
 
 export function AppSidebar() {
@@ -30,11 +32,15 @@ export function AppSidebar() {
          <ChevronLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" /> Retour à l'accueil
       </Link>
 
-      <Link href="/" className="flex items-center gap-3 px-2 group">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white text-black shadow-2xl transition-transform group-hover:scale-105 active:scale-95">
-          <PlaySquare className="h-5 w-5 fill-current" />
-        </div>
-        <span className="text-xl font-bold tracking-tighter text-white">Osmose</span>
+      <Link href="/" className="flex items-center px-2 group">
+        <Image 
+          src="/big_white_logo_osmose.png" 
+          alt="Osmose" 
+          width={140} 
+          height={40} 
+          className="h-auto w-auto max-h-10 object-contain transition-transform group-hover:scale-105 active:scale-95"
+          priority
+        />
       </Link>
 
       <nav className="flex flex-col gap-1">

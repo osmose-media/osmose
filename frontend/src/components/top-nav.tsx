@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { PlaySquare } from "lucide-react";
+import Image from "next/image";
 import { UserNav } from "@/components/user-nav";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
@@ -55,11 +55,15 @@ export function TopNav() {
 
         {/* Center: Logo */}
         <div className="absolute left-1/2 -translate-x-1/2">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black transition-transform group-hover:scale-105 active:scale-95">
-              <PlaySquare className="h-5 w-5 fill-current" />
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-white">Osmose</span>
+          <Link href="/" className="flex items-center group">
+            <Image 
+              src="/big_white_logo_osmose.png" 
+              alt="Osmose" 
+              width={120} 
+              height={36} 
+              className="h-auto w-auto max-h-9 object-contain transition-transform group-hover:scale-105 active:scale-95"
+              priority
+            />
           </Link>
         </div>
 

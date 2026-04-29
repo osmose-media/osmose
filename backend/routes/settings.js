@@ -88,4 +88,25 @@ router.post('/', adminOnly, async (req, res) => {
   }
 });
 
+const ArrService = require('../services/arrService');
+
+router.post('/test-connection', adminOnly, async (req, res) => {
+  const { type, url, apiKey } = req.body;
+  
+  if (!url || !apiKey) {
+    return res.status(400).json({ error: 'URL and API Key are required' });
+  }
+
+  try {
+    const service = new ArrService(type.toLowerCase(), url, apiKey);
+    const result = await service.testConnection();
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ 
+      error: 'Connection failed', 
+      message: error.response?.data?.message || error.message 
+    });
+  }
+});
+
 module.exports = router;

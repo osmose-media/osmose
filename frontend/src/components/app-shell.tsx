@@ -11,7 +11,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const isAuthPage = pathname === "/login" || pathname === "/setup";
   
   // Logic to determine if we are in "Discovery Mode"
-  const isDiscoveryMode = pathname.startsWith("/discover") || pathname === "/requests" || pathname === "/manage-requests";
+  const isDiscoveryMode = pathname.startsWith("/discover") || 
+                          pathname.startsWith("/requests") || 
+                          pathname === "/manage-requests";
 
   if (isAuthPage) {
     return <main className="min-h-screen w-full">{children}</main>;

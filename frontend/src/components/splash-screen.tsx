@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { PlaySquare } from "lucide-react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export function SplashScreen({ onComplete }: { onComplete: () => void }) {
@@ -23,17 +23,18 @@ export function SplashScreen({ onComplete }: { onComplete: () => void }) {
     )}>
       <div className="flex flex-col items-center gap-6">
         <div className={cn(
-          "flex h-24 w-24 items-center justify-center rounded-[2rem] bg-white text-black shadow-[0_0_50px_rgba(255,255,255,0.2)] transition-all duration-1000",
+          "relative transition-all duration-1000",
           !exit ? "scale-100 animate-pulse" : "scale-150"
         )}>
-          <PlaySquare className="h-12 w-12 fill-current" />
+          <Image 
+            src="/big_white_logo_osmose.png" 
+            alt="Osmose Logo" 
+            width={240} 
+            height={240} 
+            className="object-contain"
+            priority
+          />
         </div>
-        <h1 className={cn(
-          "text-4xl font-black tracking-[0.2em] text-white uppercase italic transition-all duration-1000 delay-100",
-          !exit ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-        )}>
-          Osmose
-        </h1>
       </div>
       
       {/* Background glow */}
