@@ -4,12 +4,11 @@ import { useState, useEffect, useCallback, useRef, Suspense } from "react";
 import { useParams, useSearchParams } from "next/navigation";
 import { useAuth } from "@/context/auth-context";
 import { toast } from "sonner";
-import Link from "next/link";
-import { Loader2, CheckCircle, Clock } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { MediaCard } from "@/components/media-card";
 
 function CategoryContent() {
   const { type } = useParams();
-  const searchParams = useSearchParams();
   const { token } = useAuth();
   const [items, setItems] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -58,39 +57,6 @@ function CategoryContent() {
     if (node) observer.current.observe(node);
   }, [loading, hasMore, fetchItems]);
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'AVAILABLE': return <CheckCircle className="h-4 w-4 text-green-500 fill-black/20" />;
-      case 'PROCESSING': return <Loader2 className="h-4 w-4 text-primary animate-spin" />;
-      case 'PENDING': return <Clock className="h-4 w-4 text-yellow-500 fill-black/20" />;
-      default: return null;
-    }
-  };
-
-  const MediaCard = ({ item }: { item: any }) => (
-    <Link href={`/discover/${type}/${item.id}`}>
-      <div className="group relative flex flex-col gap-2 cursor-pointer">
-        <div className="relative aspect-[2/3] overflow-hidden rounded-xl bg-white/5 border border-white/5 shadow-sm transition-all duration-300 group-hover:scale-[1.03] group-hover:border-white/10 group-hover:shadow-xl">
-          {item.poster_path ? (
-            <img src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-[10px] font-bold text-white/10 uppercase p-4 text-center">
-              {item.title || item.name}
-            </div>
-          )}
-          <div className="absolute top-2 right-2">
-             {item.status && (
-                <div className="bg-black/60 backdrop-blur-md p-1.5 rounded-lg border border-white/10 shadow-2xl">
-                   {getStatusIcon(item.status)}
-                </div>
-             )}
-          </div>
-        </div>
-        <h4 className="text-[13px] font-semibold text-white/70 group-hover:text-white line-clamp-1 truncate px-1">{item.title || item.name}</h4>
-      </div>
-    </Link>
-  );
-
   return (
     <div className="flex flex-col gap-10">
       <div className="border-b border-white/5 pb-6">
@@ -102,9 +68,9 @@ function CategoryContent() {
         {items.map((item, index) => {
           const uniqueKey = `${item.id}-${index}`;
           if (items.length === index + 1) {
-            return <div ref={lastElementRef} key={uniqueKey}><MediaCard item={item} /></div>;
+            return <div ref={lastElementRef} key={uniqueKey}><MediaCard item={item} type={type as "movie" | "tv"} /></div>;
           }
-          return <MediaCard key={uniqueKey} item={item} />;
+          return <MediaCard key={uniqueKey} item={item} type={type as "movie" | "tv"} />;
         })}
       </div>
 
